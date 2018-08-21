@@ -1,6 +1,6 @@
 version: '2'
 services:
-  lb:
+  proxy:
     image: jwilder/nginx-proxy
     ports:
       - ${LANCACHE_IP}:80:80/tcp
