@@ -24,6 +24,7 @@ cat services.json | jq -r '.cache_domains[] | .name, .domain_files[]' | while re
         
         echo "  ${SERVICE}:" >> ${DOCKERFILE}
         echo "    image: steamcache/${CONTAINER}:latest" >> ${DOCKERFILE}
+        echo "    env_file: .env" >> ${DOCKERFILE}
         echo "    volumes:" >> ${DOCKERFILE}
         echo "      - \${CACHE_ROOT}/${SERVICE}/cache:/data/cache" >> ${DOCKERFILE}
         echo "      - \${CACHE_ROOT}/${SERVICE}/logs:/data/logs" >> ${DOCKERFILE}
@@ -46,7 +47,7 @@ cat services.json | jq -r '.cache_domains[] | .name, .domain_files[]' | while re
             fi
         done< <(cat ${L} | grep -v "^#" )
 
-        sed -i "s/- VIRTUAL_HOST={{ ${SERVICE} }}/- VIRTUAL_HOST='${URLAppend}'/" ${DOCKERFILE}
+        sed -i "s/- VIRTUAL_HOST={{ ${SERVICE} }}/- VIRTUAL_HOST=${URLAppend}/" ${DOCKERFILE}
         rm -f ${L}
 
     fi

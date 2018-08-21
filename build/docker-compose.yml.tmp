@@ -2,15 +2,19 @@ version: '2'
 services:
   proxy:
     image: jwilder/nginx-proxy
+    env_file: .env
     ports:
       - ${LANCACHE_IP}:80:80/tcp
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    env_file: .env
   dns:
     image: steamcache/steamcache-dns:latest
+    env_file: .env
     ports:
       - ${DNS_IP}:53:53/udp
   sniproxy:
     image: steamcache/sniproxy:latest
+    env_file: .env
     ports:
       - ${LANCACHE_IP}:443:443/tcp
