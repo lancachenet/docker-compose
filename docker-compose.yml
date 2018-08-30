@@ -106,6 +106,14 @@ services:
       - ${CACHE_ROOT}/origin/logs:/data/logs
     environment:
       - VIRTUAL_HOST=origin-a.akamaihd.net,akamai.cdn.ea.com,lvlt.cdn.ea.com,river.data.ea.com,origin-a.akamaihd.net.edgesuite.net
+  renegadex:
+    image: steamcache/generic:latest
+    env_file: .env
+    volumes:
+      - ${CACHE_ROOT}/renegadex/cache:/data/cache
+      - ${CACHE_ROOT}/renegadex/logs:/data/logs
+    environment:
+      - VIRTUAL_HOST=rxp-fl.cncirc.net,rxp-chi.cncirc.net,rxp-nz.cncirc.net,rxp-bgr.cncirc.net,rxp-fr.cncirc.net,rxp-nyc.cncirc.net,rxp-uk.cncirc.net,rxp-sg.cncirc.net,rxp-la.cncirc.net,rxp-fin.cncirc.net,denver1.renegade-x.com,seattle1.renegade-x.com
   riot:
     image: steamcache/generic:latest
     env_file: .env
@@ -137,7 +145,7 @@ services:
       - ${CACHE_ROOT}/steam/cache:/data/cache
       - ${CACHE_ROOT}/steam/logs:/data/logs
     environment:
-      - VIRTUAL_HOST=*.content.steampowered.com,content1.steampowered.com,content2.steampowered.com,content3.steampowered.com,content4.steampowered.com,content5.steampowered.com,content6.steampowered.com,content7.steampowered.com,content8.steampowered.com,cs.steampowered.com,steamcontent.com,client-download.steampowered.com,*.hsar.steampowered.com.edgesuite.net,*.akamai.steamstatic.com,content-origin.steampowered.com,clientconfig.akamai.steamtransparent.com,steampipe.akamaized.net,edgecast.steamstatic.com,steam.apac.qtlglb.com.mwcloudcdn.com,*.cs.steampowered.com,*.edgecast.steamstatic.com,*.steamcontent.com,cdn1-sea1.valve.net,cdn2-sea1.valve.net,*.steam-content-dnld-1.apac-1-cdn.cqloud.com,steam.apac.qtlglb.com,edge.steam-dns.top.comcast.net
+      - VIRTUAL_HOST=*.content.steampowered.com,content1.steampowered.com,content2.steampowered.com,content3.steampowered.com,content4.steampowered.com,content5.steampowered.com,content6.steampowered.com,content7.steampowered.com,content8.steampowered.com,cs.steampowered.com,steamcontent.com,client-download.steampowered.com,*.hsar.steampowered.com.edgesuite.net,*.akamai.steamstatic.com,content-origin.steampowered.com,clientconfig.akamai.steamtransparent.com,steampipe.akamaized.net,edgecast.steamstatic.com,steam.apac.qtlglb.com.mwcloudcdn.com,*.cs.steampowered.com,*.edgecast.steamstatic.com,*.steamcontent.com,cdn1-sea1.valve.net,cdn2-sea1.valve.net,*.steam-content-dnld-1.apac-1-cdn.cqloud.com,steam.apac.qtlglb.com,edge.steam-dns.top.comcast.net,edge.steam-dns-2.top.comcast.net,steamcdn-a.akamaihd.net
   uplay:
     image: steamcache/generic:latest
     env_file: .env
