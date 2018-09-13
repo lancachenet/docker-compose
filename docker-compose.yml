@@ -17,7 +17,7 @@ services:
     image: steamcache/sniproxy:latest
     env_file: .env
     ports:
-      - ${LANCACHE_IP}:443:443/tcp
+      - 443:443/tcp
   apple:
     image: steamcache/generic:latest
     env_file: .env
