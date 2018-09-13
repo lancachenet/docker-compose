@@ -58,14 +58,6 @@ services:
       - ${CACHE_ROOT}/frontier/logs:/data/logs
     environment:
       - VIRTUAL_HOST=cdn.zaonce.net
-  gog:
-    image: steamcache/generic:latest
-    env_file: .env
-    volumes:
-      - ${CACHE_ROOT}/gog/cache:/data/cache
-      - ${CACHE_ROOT}/gog/logs:/data/logs
-    environment:
-      - VIRTUAL_HOST=cdn.gog.com,wpc.11df.deltacdn.net,11df-eu-lb.wpc.edgecastcdn.net,11df-eu-lb.apr-11df.edgecastdns.net
   hirez:
     image: steamcache/generic:latest
     env_file: .env
@@ -169,7 +161,7 @@ services:
       - ${CACHE_ROOT}/wargaming/cache:/data/cache
       - ${CACHE_ROOT}/wargaming/logs:/data/logs
     environment:
-      - VIRTUAL_HOST=dl.wargaming.net,dl2.wargaming.net,wg.gcdn.co,wargaming.net.edgesuite.ne,wgusst-na.wargaming.net,wgusst-eu.wargaming.net,update-v4r4h10x.worldofwarships.com,dl-wows-ak.wargaming.net
+      - VIRTUAL_HOST=dl.wargaming.net,dl2.wargaming.net,wg.gcdn.co,wargaming.net.edgesuite.ne,wgusst-na.wargaming.net,wgusst-eu.wargaming.net,update-v4r4h10x.worldofwarships.com,dl-wows-ak.wargaming.net,wgus-wotasia.wargaming.net
   wsus:
     image: steamcache/generic:latest
     env_file: .env
