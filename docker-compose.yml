@@ -169,7 +169,7 @@ services:
       - ${CACHE_ROOT}/wsus/cache:/data/cache
       - ${CACHE_ROOT}/wsus/logs:/data/logs
     environment:
-      - VIRTUAL_HOST=officecdn.microsoft.com,*.windowsupdate.com,windowsupdate.com,*.dl.delivery.mp.microsoft.com
+      - VIRTUAL_HOST=officecdn.microsoft.com,windowsupdate.com,*.windowsupdate.com,dl.delivery.mp.microsoft.com,*.dl.delivery.mp.microsoft.com
   xboxlive:
     image: steamcache/generic:latest
     env_file: .env
