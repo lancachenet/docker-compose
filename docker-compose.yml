@@ -9,17 +9,17 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     env_file: .env
   dns:
-    image: steamcache/steamcache-dns:latest
+    image: lancachenet/lancache-dns:latest
     env_file: .env
     ports:
       - ${DNS_IP}:53:53/udp
   sniproxy:
-    image: steamcache/sniproxy:latest
+    image: lancachenet/sniproxy:latest
     env_file: .env
     ports:
       - 443:443/tcp
   apple:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/apple/cache:/data/cache
@@ -27,7 +27,7 @@ services:
     environment:
       - VIRTUAL_HOST=swcdn.apple.com
   arenanet:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/arenanet/cache:/data/cache
@@ -35,7 +35,7 @@ services:
     environment:
       - VIRTUAL_HOST=assetcdn.101.arenanetworks.com,assetcdn.102.arenanetworks.com,assetcdn.103.arenanetworks.com,live.patcher.bladeandsoul.com
   blizzard:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/blizzard/cache:/data/cache
@@ -43,7 +43,7 @@ services:
     environment:
       - VIRTUAL_HOST=dist.blizzard.com,dist.blizzard.com.edgesuite.net,llnw.blizzard.com,edgecast.blizzard.com,blizzard.vo.llnwd.net,blzddist1-a.akamaihd.net,blzddist2-a.akamaihd.net,blzddist3-a.akamaihd.net,blzddist4-a.akamaihd.net,level3.blizzard.com,nydus.battle.net,edge.blizzard.top.comcast.net
   daybreak:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/daybreak/cache:/data/cache
@@ -51,7 +51,7 @@ services:
     environment:
       - VIRTUAL_HOST=pls.patch.daybreakgames.com
   frontier:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/frontier/cache:/data/cache
@@ -59,7 +59,7 @@ services:
     environment:
       - VIRTUAL_HOST=cdn.zaonce.net
   hirez:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/hirez/cache:/data/cache
@@ -67,7 +67,7 @@ services:
     environment:
       - VIRTUAL_HOST=hirez.http.internapcdn.net
   minecraft:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/minecraft/cache:/data/cache
@@ -75,7 +75,7 @@ services:
     environment:
       - VIRTUAL_HOST=*.download.minecraft.net
   nexusmods:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/nexusmods/cache:/data/cache
@@ -83,7 +83,7 @@ services:
     environment:
       - VIRTUAL_HOST=filedelivery.nexusmods.com
   nintendo:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/nintendo/cache:/data/cache
@@ -91,7 +91,7 @@ services:
     environment:
       - VIRTUAL_HOST=ccs.cdn.wup.shop.nintendo.com,pushmo.hac.lp1.eshop.nintendo.net,ecs-lp1.hac.shop.nintendo.net,receive-lp1.dg.srv.nintendo.net,aqua.hac.lp1.d4c.nintendo.net,atum.hac.lp1.d4c.nintendo.net,bugyo.hac.lp1.eshop.nintendo.net,tagaya.hac.lp1.eshop.nintendo.net
   origin:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/origin/cache:/data/cache
@@ -99,7 +99,7 @@ services:
     environment:
       - VIRTUAL_HOST=origin-a.akamaihd.net,akamai.cdn.ea.com,lvlt.cdn.ea.com,river.data.ea.com,origin-a.akamaihd.net.edgesuite.net
   renegadex:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/renegadex/cache:/data/cache
@@ -107,7 +107,7 @@ services:
     environment:
       - VIRTUAL_HOST=rxp-fl.cncirc.net,rxp-chi.cncirc.net,rxp-nz.cncirc.net,rxp-bgr.cncirc.net,rxp-fr.cncirc.net,rxp-nyc.cncirc.net,rxp-uk.cncirc.net,rxp-sg.cncirc.net,rxp-la.cncirc.net,rxp-fin.cncirc.net,denver1.renegade-x.com,seattle1.renegade-x.com
   riot:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/riot/cache:/data/cache
@@ -115,7 +115,7 @@ services:
     environment:
       - VIRTUAL_HOST=l3cdn.riotgames.com,worldwide.l3cdn.riotgames.com,riotgamespatcher-a.akamaihd.net,riotgamespatcher-a.akamaihd.net.edgesuite.net
   rockstar:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/rockstar/cache:/data/cache
@@ -123,7 +123,7 @@ services:
     environment:
       - VIRTUAL_HOST=patches.rockstargames.com
   sony:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/sony/cache:/data/cache
@@ -131,7 +131,7 @@ services:
     environment:
       - VIRTUAL_HOST=pls.patch.station.sony.com,gs2.ww.prod.dl.playstation.net,gs2.sonycoment.loris-e.llnwd.net
   steam:
-    image: steamcache/${STEAMCACHE_CONTAINER}:latest
+    image: lancachenet/${STEAMCACHE_CONTAINER}:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/steam/cache:/data/cache
@@ -139,7 +139,7 @@ services:
     environment:
       - VIRTUAL_HOST=*.content.steampowered.com,content1.steampowered.com,content2.steampowered.com,content3.steampowered.com,content4.steampowered.com,content5.steampowered.com,content6.steampowered.com,content7.steampowered.com,content8.steampowered.com,cs.steampowered.com,steamcontent.com,client-download.steampowered.com,*.hsar.steampowered.com.edgesuite.net,*.akamai.steamstatic.com,content-origin.steampowered.com,clientconfig.akamai.steamtransparent.com,steampipe.akamaized.net,edgecast.steamstatic.com,steam.apac.qtlglb.com.mwcloudcdn.com,*.cs.steampowered.com,*.edgecast.steamstatic.com,*.steamcontent.com,cdn1-sea1.valve.net,cdn2-sea1.valve.net,*.steam-content-dnld-1.apac-1-cdn.cqloud.com,steam.apac.qtlglb.com,edge.steam-dns.top.comcast.net,edge.steam-dns-2.top.comcast.net,steamcdn-a.akamaihd.net
   uplay:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/uplay/cache:/data/cache
@@ -147,7 +147,7 @@ services:
     environment:
       - VIRTUAL_HOST=*.cdn.ubi.com
   twitch:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/twitch/cache:/data/cache
@@ -155,7 +155,7 @@ services:
     environment:
       - VIRTUAL_HOST=d3rmjivj4k4f0t.cloudfront.net,addons.forgesvc.net,media.forgecdn.net,files.forgecdn.net
   wargaming:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/wargaming/cache:/data/cache
@@ -163,7 +163,7 @@ services:
     environment:
       - VIRTUAL_HOST=dl.wargaming.net,dl2.wargaming.net,wg.gcdn.co,wargaming.net.edgesuite.ne,wgusst-na.wargaming.net,wgusst-eu.wargaming.net,update-v4r4h10x.worldofwarships.com,dl-wows-ak.wargaming.net,wgus-wotasia.wargaming.net
   wsus:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/wsus/cache:/data/cache
@@ -171,7 +171,7 @@ services:
     environment:
       - VIRTUAL_HOST=officecdn.microsoft.com,windowsupdate.com,*.windowsupdate.com,dl.delivery.mp.microsoft.com,*.dl.delivery.mp.microsoft.com
   xboxlive:
-    image: steamcache/generic:latest
+    image: lancachenet/generic:latest
     env_file: .env
     volumes:
       - ${CACHE_ROOT}/xboxlive/cache:/data/cache

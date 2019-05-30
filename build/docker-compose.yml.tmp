@@ -9,12 +9,12 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     env_file: .env
   dns:
-    image: steamcache/steamcache-dns:latest
+    image: lancachenet/lancache-dns:latest
     env_file: .env
     ports:
       - ${DNS_IP}:53:53/udp
   sniproxy:
-    image: steamcache/sniproxy:latest
+    image: lancachenet/sniproxy:latest
     env_file: .env
     ports:
       - 443:443/tcp

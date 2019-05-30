@@ -23,7 +23,7 @@ cat services.json | jq -r '.cache_domains[] | .name, .domain_files[]' | while re
         echo "${SERVICE}"
         
         echo "  ${SERVICE}:" >> ${DOCKERFILE}
-        echo "    image: steamcache/${CONTAINER}:latest" >> ${DOCKERFILE}
+        echo "    image: lancachenet/${CONTAINER}:latest" >> ${DOCKERFILE}
         echo "    env_file: .env" >> ${DOCKERFILE}
         echo "    volumes:" >> ${DOCKERFILE}
         echo "      - \${CACHE_ROOT}/${SERVICE}/cache:/data/cache" >> ${DOCKERFILE}
