@@ -13,6 +13,8 @@ services:
   monolithic:
     image: lancachenet/monolithic:latest
     env_file: .env
+    ports:
+      - 80:80/tcp
     volumes:
       - ${CACHE_ROOT}/cache:/data/cache
       - ${CACHE_ROOT}/logs:/data/logs
