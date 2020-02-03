@@ -27,9 +27,7 @@ This allows you to choose one or more IP addresses for upstream DNS resolution i
 
 Whichever resolver you choose depends on your network's requirements - if you don't need to provide internal DNS names, you can point `UPSTREAM_DNS` directly to an external resolver (the default is Google's DNS at `8.8.8.8`).
 
-If you run internal services on your network, you can set `UPSTREAM_DNS` to be your internal DNS resolver(s).
-
-**Note:** This setting should be exactly one IP until https://github.com/lancachenet/lancache-dns/issues/84 is fixed.
+If you run internal services on your network, you can set `UPSTREAM_DNS` to be your internal DNS resolver(s), semicolon separated (e.g. `192.168.0.1; 192.168.0.2`).
 
 ### Example external resolvers
 - Google DNS:
