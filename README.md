@@ -54,8 +54,12 @@ This setting will constrain the upper limit of space used by cached data. You ge
 
 The cache server will automatically cached data when the total stored amount approaches this limit, in a least-recently-used fashion (oldest data, least accessed deleted first).
 
+> **Note:** that this must be given in megabytes with an `m` suffix (e.g. the default value, `1000000m`).
+
 ## `CACHE_MAX_AGE`
 This setting allows you to control the maximum duration cached data will be kept for. The default should be fine for most use cases - the `CACHE_DISK_SIZE` setting will generally be used before this for aging out data.
+
+> **Note:** this must be given as a number of days in age before expiry, with a `d` suffix (e.g. the default value, `3650d`).
 
 # More information
 The LanCache docker-stack is generated automatically from the data over at [UKLans](https://github.com/uklans/cache-domains). All services that are listed in the UKLans repository are available and supported inside this docker-compose.
