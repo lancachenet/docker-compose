@@ -13,8 +13,12 @@ This controls IP assignment within the DNS service - it assumes that every servi
 ## `LANCACHE_IP`
 This provides one or more IP addresses to the DNS service to advertise the cached services. If your cache host has exactly one IP address (e.g. `192.168.0.10`), specify that here. If your cache host has more IP addresses, you can list all of them, separated by spaces (e.g. `192.168.0.10 192.168.0.11 192.168.0.12`) - DNS entries will be configured for all services and all IPs by default.
 
+> **Note:** unless your cache host is at `10.0.39.1`, you will want to change this value.
+
 ## `DNS_BIND_IP`
 This sets the IP address that the DNS service will listen on. If your cache host has exactly one IP address (eg. `192.168.0.10`), specify that here. If your cache host has multiple IPs, specify exactly one and use that. This compose stack does not support the DNS service listening on multiple IPs by default.
+
+> **Note:** unless your cache host is at `10.0.39.1`, you will want to change this value.
 
 There are a few ways to make your local network aware of the cache server.
 
@@ -43,6 +47,8 @@ If you run internal services on your network, you can set `UPSTREAM_DNS` to be y
 This will be used as the base directory for storing cached data (as `CACHE_ROOT/cache`) and logs (as `CACHE_ROOT/logs`).
 
 The `CACHE_ROOT` should either be on a separate partition, or ideally on separate storage devices entirely, from your system root.
+
+> **Note:** this setting defaults to `/lancache`. Unless your cache storage lives here, you probably want to change this value.
 
 ## `CACHE_MEM_SIZE`
 This controls the size of the memory cache used by the cache server. The default should suffice for almost all configurations.
