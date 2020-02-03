@@ -5,6 +5,8 @@
 This docker-compose is meant as an example for running our lancache stack, It will run out of the box with minimal changes to the .env file for your local IP address.
 
 # Settings
+> You *MUST* set at least `LANCACHE_IP` and `DNS_BIND_IP`. It is highly recommended that you change `CACHE_ROOT` to a folder of your choosing, and set [`CACHE_DISK_SIZE`](#cache_disk_size) to a value that suits your storage capacity.
+
 ## `USE_GENERIC_CACHE`
 This controls IP assignment within the DNS service - it assumes that every service is reachable by default on every IP given in `LANCACHE_IP`. See the [lancache-dns](https://github.com/lancachenet/lancache-dns) project for documentation on customising the behaviour of the DNS service.
 
