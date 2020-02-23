@@ -48,7 +48,7 @@ This will be used as the base directory for storing cached data (as `CACHE_ROOT/
 
 The `CACHE_ROOT` should either be on a separate partition, or ideally on separate storage devices entirely, from your system root.
 
-> **Note:** this setting defaults to `/lancache`. Unless your cache storage lives here, you probably want to change this value.
+> **Note:** this setting defaults to `./lancache`. Unless your cache storage lives here, you probably want to change this value.
 
 ## `CACHE_MEM_SIZE`
 This controls the size of the memory cache used by the cache server. The default should suffice for almost all configurations.
