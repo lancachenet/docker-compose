@@ -6,12 +6,16 @@ services:
 #    restart: unless-stopped
     ports:
       - ${DNS_BIND_IP}:53:53/udp
+    environment:
+      - TZ=${TZ}
   sniproxy:
     image: lancachenet/sniproxy:latest
     env_file: .env
 #    restart: unless-stopped
     ports:
       - 443:443/tcp
+    environment:
+      - TZ=${TZ}
   monolithic:
     image: lancachenet/monolithic:latest
     env_file: .env
@@ -21,3 +25,5 @@ services:
     volumes:
       - ${CACHE_ROOT}/cache:/data/cache
       - ${CACHE_ROOT}/logs:/data/logs
+    environment:
+      - TZ=${TZ}
