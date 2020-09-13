@@ -6,6 +6,7 @@ services:
 #    restart: unless-stopped
     ports:
       - ${DNS_BIND_IP}:53:53/udp
+      - ${DNS_BIND_IP}:53:53/tcp
     environment:
       - TZ=${TZ}
   sniproxy:
