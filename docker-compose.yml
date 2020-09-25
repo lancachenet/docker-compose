@@ -7,18 +7,19 @@ services:
     ports:
       - ${DNS_BIND_IP}:53:53/udp
       - ${DNS_BIND_IP}:53:53/tcp
-  sniproxy:
-    image: lancachenet/sniproxy:latest
-    env_file: .env
+#  sniproxy:
+#    image: lancachenet/sniproxy:latest
+#    env_file: .env
 #    restart: unless-stopped
-    ports:
-      - 443:443/tcp
+#    ports:
+#      - 443:443/tcp
   monolithic:
-    image: lancachenet/monolithic:latest
+    image: lancachenet/monolithic:stream
     env_file: .env
 #    restart: unless-stopped
     ports:
       - 80:80/tcp
+      - 443:443/tcp
     volumes:
       - ${CACHE_ROOT}/cache:/data/cache
       - ${CACHE_ROOT}/logs:/data/logs
