@@ -28,5 +28,3 @@ services:
     volumes:
       - ${CACHE_ROOT}/cache:/data/cache
       - ${CACHE_ROOT}/logs:/data/logs
-    environment:
-      - TZ=${TZ}
