@@ -67,6 +67,11 @@ This setting allows you to control the maximum duration cached data will be kept
 
 > **Note:** this must be given as a number of days in age before expiry, with a `d` suffix (e.g. the default value, `3650d`).
 
+## `TZ`
+This setting allows you to set the timezone that is used by the docker containers. Most notably changing the timestamps of the logs. Useful for debugging without having to think sometimes multiple hours in the future/past. 
+
+For a list of all timezones see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+
 # More information
 The LanCache docker-stack is generated automatically from the data over at [UKLans](https://github.com/uklans/cache-domains). All services that are listed in the UKLans repository are available and supported inside this docker-compose.
 
