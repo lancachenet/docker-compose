@@ -1,0 +1,2 @@
+#Inherit for lancachenet/.github
+_extends: .github
