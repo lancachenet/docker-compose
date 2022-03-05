@@ -50,17 +50,18 @@ The `CACHE_ROOT` should either be on a separate partition, or ideally on separat
 
 > **Note:** this setting defaults to `./lancache`. Unless your cache storage lives here, you probably want to change this value.
 
-## `CACHE_MEM_SIZE`
-This controls the size of the memory cache used by the cache server. The default should suffice for almost all configurations.
-
-> **Note:** this setting does not limit the amount of memory that the Linux host will use for page caches, only what the cache server will use itself - see the Docker documentation on limiting memory consumption for a container if you wish to constrain the total memory consumption of the cache server, but generally you want as much memory as possible on your cache server to be used to store hot data.
-
 ## `CACHE_DISK_SIZE`
 This setting will constrain the upper limit of space used by cached data. You generally want to leave a small gap (10-20GB at least) between the size listed here and the available storage space used for the cached data, just in case.
 
 The cache server will automatically cached data when the total stored amount approaches this limit, in a least-recently-used fashion (oldest data, least accessed deleted first).
 
 > **Note:** that this must be given in megabytes with an `m` suffix (e.g. the default value, `1000000m`).
+
+## `CACHE_INDEX_SIZE`
+Change this to allow sufficient index memory for the nginx cache manager (default 500m)
+We recommend 250m of index memory per 1TB of CACHE_DISK_SIZE 
+
+> **Note:** this setting does not limit the amount of memory that the Linux host will use for page caches, only what the cache server will use itself - see the Docker documentation on limiting memory consumption for a container if you wish to constrain the total memory consumption of the cache server, but generally you want as much memory as possible on your cache server to be used to store hot data.
 
 ## `CACHE_MAX_AGE`
 This setting allows you to control the maximum duration cached data will be kept for. The default should be fine for most use cases - the `CACHE_DISK_SIZE` setting will generally be used before this for aging out data.
