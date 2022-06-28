@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sed -i 's/#    restart: unless-stopped/    restart: unless-stopped/g' docker-compose.yml
+sed -i 's/x-restart-policy: \&restart-policy "no"/x-restart-policy: \&restart-policy "unless-stopped"/g' docker-compose.yml
 docker-compose up -d
