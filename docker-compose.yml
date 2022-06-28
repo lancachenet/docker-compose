@@ -8,16 +8,6 @@ services:
       - ${DNS_BIND_IP}:53:53/udp
       - ${DNS_BIND_IP}:53:53/tcp
 
-## HTTPS requests are now handled in monolithic directly
-## you could choose to return to sniproxy if desired
-#
-#  sniproxy:
-#    image: lancachenet/sniproxy:latest
-#    env_file: .env
-#    restart: unless-stopped
-#    ports:
-#      - 443:443/tcp
-
   monolithic:
     image: lancachenet/monolithic:latest
     env_file: .env
