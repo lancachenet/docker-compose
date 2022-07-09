@@ -76,4 +76,4 @@ For a list of all timezones see https://en.wikipedia.org/wiki/List_of_tz_databas
 # More information
 The LanCache docker-stack is generated automatically from the data over at [UKLans](https://github.com/uklans/cache-domains). All services that are listed in the UKLans repository are available and supported inside this docker-compose.
 
-For an FAQ see https://github.com/lancachenet/monolithic/blob/master/faq.md
+For an FAQ see [https://github.com/lancachenet/monolithic/blob/master/faq.md](https://lancache.net/docs/faq/)
