@@ -57,7 +57,7 @@ This setting will constrain the upper limit of space used by cached data. You ge
 
 The cache server will automatically delete cached data when the total stored amount approaches this limit, in a least-recently-used fashion (oldest data, least accessed deleted first).
 
-> **Note:** that this must be given in megabytes with an `m` suffix (e.g. the default value, `1000000m`).
+> **Note:** that this must be given in gigabytes with a `g` suffix (e.g. the default value, `2000g`).
 
 ## `CACHE_INDEX_SIZE`
 Change this to allow sufficient index memory for the nginx cache manager (default 500m)
