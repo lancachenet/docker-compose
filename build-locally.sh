@@ -1,20 +1,21 @@
 #!/bin/bash
-#This script build the monolithic images locally, for cases like the raspberry pi, which operates on arm64 architecture, which isn't officially supported.
+#This script build the monolithic image locally, for cases like the raspberry pi, which operates on arm64 architecture, which isn't officially supported.
 
 PURPLEBOLD="$(tput setf 5 bold)"
 
-#Checks if standart Ubuntu image is present before running:
+#Checks if image ubuntu already exists:
+
 IMAGEEXISTS=true
-if [[ "$(docker image inspect ubuntu >/dev/null 2>&1 && echo true || echo false)" = "false" ]]; then
+if [[ "$(docker image inspect ubuntu >/dev/null 2>&1 && echo true || echo false)" == "false" ]]; then
   IMAGEEXISTS=false
 fi
 
 printf "${PURPLEBOLD}Building temporary modified Ubuntu image:\n"
 docker build -t lancachenet/ubuntu:latest --progress tty https://github.com/lancachenet/ubuntu.git
 
-#Removes standart Ubuntu image if not present before running:
-if [$IMAGEEXISTS" == false]; then
-  printf "${PURPLEBOLD}Removing standart Ubuntu image:\n"
+#Removes standard Ubuntu image if not present before running:
+if [ "$IMAGEEXISTS" == false ]; then
+  printf "${PURPLEBOLD}Removing standard Ubuntu image:\n"
   docker rmi ubuntu
 fi
 
