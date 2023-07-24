@@ -1,0 +1,70 @@
+# This docker file allows a local build of the required base images. 
+# It can be used to build a lancache stack on an unsupported architecture (for example a raspberrypi)
+# Either overwrite the docker-compose.yml file or run `docker-compose -f ./docker-compose.build.yml up`
+# 
+# Using this file will create 2 dummy containers (ubuntu-base and ubuntu-nginx) which should immediately exit
+#  This is expected behaviour as they are used to build the images and then no longer required.
+
+version: '2'
+x-restart-policy: &restart-policy "no"
+
+services:
+
+  ubuntu-base:
+    build: 
+      context: https://github.com/lancachenet/ubuntu.git
+      tags:
+        - lancachenet/ubuntu:latest
+    image: lcn-ubuntu
+    command: /bin/true
+  ubuntu-nginx:
+    build: 
+      context: https://github.com/lancachenet/ubuntu-nginx.git
+      tags:
+        - lancachenet/ubuntu-nginx:latest
+    image: lcn-ubuntu-nginx
+    command: /bin/true
+    depends_on: 
+      - ubuntu-base
+  dns:
+    build: 
+      context: https://github.com/lancachenet/lancache-dns.git
+      tags:
+        - lancachenet/lancache-dns:latest
+    image: lcn-lancache-dns
+    env_file: .env
+    restart: *restart-policy
+    ports:
+      - ${DNS_BIND_IP}:53:53/udp
+      - ${DNS_BIND_IP}:53:53/tcp
+
+    depends_on:
+      - ubuntu-base
+
+## HTTPS requests are now handled in monolithic directly
+## you could choose to return to sniproxy if desired
+#
+#  sniproxy:
+#    image: lancachenet/sniproxy:latest
+#    env_file: .env
+#    restart: *restart-policy
+#    ports:
+#      - 443:443/tcp
+
+  monolithic:
+    build: 
+      context: https://github.com/lancachenet/monolithic.git
+      tags:
+        - lancachenet/monolithic:latest
+    image: lcn-monolithic
+    env_file: .env
+    restart: *restart-policy
+    ports:
+      - 80:80/tcp
+      - 443:443/tcp
+    volumes:
+      - ${CACHE_ROOT}/cache:/data/cache
+      - ${CACHE_ROOT}/logs:/data/logs
+    depends_on:
+      - ubuntu-nginx
+
