@@ -28,6 +28,46 @@ There are a few ways to make your local network aware of the cache server.
   This allows the `lancache-dns` service to provide clients with the appropriate local IPs for cached services, and all other requests will be passed to `UPSTREAM_DNS`.
 2. Use the configuration generators available from [UKLANs' cache-domains](https://github.com/uklans/cache-domains) project to create configuration data to load into your network's existing DNS infrastructure
 
+## `METRIC_BIND_IP`
+This sets the IP address that the metric services will listen on. If your cache host has exactly one IP address 
+(eg. `192.168.0.10`), specify that here. If your cache host has multiple IPs, specify exactly one and use that.
+
+This may be used to segregate the cache and dns ip endpoints from the metrics endpoints.
+
+For prometheus to scrape the metrics, you will need to add the following to your prometheus.yml file:
+
+> Please note, that Prometheus is not included in this docker-compose stack.
+
+```yaml
+scrape_configs:
+  - job_name: 'lancache'
+    static_configs:
+      - targets: ['<METRIC_BIND_IP>:<METRIC_PORT>']
+```
+
+- `<METRIC_BIND_IP>` is the IP address you set in the `METRIC_BIND_IP` environment variable
+- `<METRIC_PORT>` is the port of the metric services. Please see below for the ports used by the metric services.
+
+| Service    | Port |
+|------------|------|
+| Bind (DNS) | 9119 |
+| Monolithic | 9113 |
+
+### Prometheus example
+
+The following is a full example of a prometheus.yml file that will scrape the metrics from the lancache services.
+
+```yaml
+scrape_configs:
+  - job_name: 'lancache-dns'
+    static_configs:
+      - targets: ['192.168.0.10:9119']
+  - job_name: 'lancache-monolithic'
+    static_configs:
+      - targets: ['192.168.0.10:9113']
+```
+
+
 ## `UPSTREAM_DNS`
 This allows you to choose one or more IP addresses for upstream DNS resolution if a name is not matched by the `lancache-dns` service (e.g. non-cached services, local hostname resolution).
 
