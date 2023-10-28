@@ -8,6 +8,23 @@ services:
     ports:
       - ${DNS_BIND_IP}:53:53/udp
       - ${DNS_BIND_IP}:53:53/tcp
+    networks:
+      default:
+      metrics:
+        aliases:
+          - lancache-dns      
+
+## Metrics exporter for bind. This can be disabled, if you don't want to export metrics to prometheus
+
+  metrics:
+    image: prometheuscommunity/bind-exporter:v0.3.0
+    args:
+      - --web.listen-address=:9119 # This is the port the exporter will listen on
+      - --bind.stats-url http://lancache-dns:8053
+    networks:
+      metrics:
+        aliases:
+          - bind-exporter
 
 ## HTTPS requests are now handled in monolithic directly
 ## you could choose to return to sniproxy if desired
@@ -29,3 +46,9 @@ services:
     volumes:
       - ${CACHE_ROOT}/cache:/data/cache
       - ${CACHE_ROOT}/logs:/data/logs
+    networks:
+      default:
+
+networks:
+  default:
+  metrics:
