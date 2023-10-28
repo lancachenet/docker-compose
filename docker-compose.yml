@@ -10,21 +10,9 @@ services:
       - ${DNS_BIND_IP}:53:53/tcp
     networks:
       default:
-      metrics:
+      dns-metrics:
         aliases:
           - lancache-dns      
-
-## Metrics exporter for bind. This can be disabled, if you don't want to export metrics to prometheus
-
-  metrics:
-    image: prometheuscommunity/bind-exporter:v0.3.0
-    args:
-      - --web.listen-address=:9119 # This is the port the exporter will listen on
-      - --bind.stats-url http://lancache-dns:8053
-    networks:
-      metrics:
-        aliases:
-          - bind-exporter
 
 ## HTTPS requests are now handled in monolithic directly
 ## you could choose to return to sniproxy if desired
@@ -48,7 +36,40 @@ services:
       - ${CACHE_ROOT}/logs:/data/logs
     networks:
       default:
+      monolithic-metrics:
+        aliases:
+          - lancache-monolithic
+
+## Metrics exporter for DNS and Monolithic
+## This can be disabled, if you don't want to export metrics to prometheus
+## To disable, comment out the next two services
+
+  dns-metrics:
+    image: prometheuscommunity/bind-exporter:v0.3.0
+    args:
+      - --web.listen-address=:9119 # This is the port the exporter will listen on
+      - --bind.stats-url http://lancache-dns:8053
+    ports:
+      - ${METRIC_BIND_IP:-${DNS_BIND_IP}}:9119:9119
+    networks:
+      dns-metrics:
+        aliases:
+          - bind-exporter
+  
+  monolithic-metrics:
+    image: nginx/nginx-prometheus-exporter:0.10.0
+    args:
+      - --nginx.scrape-uri=http://lancache-monolithic:8080/nginx_status
+    ports:
+      - ${METRIC_BIND_IP:-${DNS_BIND_IP}}:9113:9113
+    networks:
+      monolithic-metrics:
+        aliases:
+          - monolithic-exporter
+
+## Network definitions, do not change these, unless you know what you are doing
 
 networks:
   default:
-  metrics:
+  dns-metrics:
+  monolithic-metrics:
