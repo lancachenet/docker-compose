@@ -59,11 +59,16 @@ The cache server will automatically delete cached data when the total stored amo
 
 > **Note:** that this must be given in either:
 > - gigabytes, with `g` suffix (e.g. the default value, `1000g`)
-> - megabytes, with `m` suffix (e.g. `900000m`)
+> - terabytes, with `t` suffix (e.g. `4t`)
+
+## `MIN_FREE_DISK`
+Configures the minimum amount of free disk space that must be kept at all times.  This setting avoids the scenario where the disk can accidentally become completely full, and no further data can be written.
+
+When the available free space drops below the set amount for any reason, the cache server will begin pruning content in a least-recently-used fashion, similar to how `CACHE_DISK_SIZE` works.
 
 ## `CACHE_INDEX_SIZE`
 Change this to allow sufficient index memory for the nginx cache manager (default 500m)
-We recommend 250m of index memory per 1TB of CACHE_DISK_SIZE 
+We recommend 250m of index memory per 1TB of CACHE_DISK_SIZE
 
 > **Note:** this setting does not limit the amount of memory that the Linux host will use for page caches, only what the cache server will use itself - see the Docker documentation on limiting memory consumption for a container if you wish to constrain the total memory consumption of the cache server, but generally you want as much memory as possible on your cache server to be used to store hot data.
 
@@ -73,7 +78,7 @@ This setting allows you to control the maximum duration cached data will be kept
 > **Note:** this must be given as a number of days in age before expiry, with a `d` suffix (e.g. the default value, `3650d`).
 
 ## `TZ`
-This setting allows you to set the timezone that is used by the docker containers. Most notably changing the timestamps of the logs. Useful for debugging without having to think sometimes multiple hours in the future/past. 
+This setting allows you to set the timezone that is used by the docker containers. Most notably changing the timestamps of the logs. Useful for debugging without having to think sometimes multiple hours in the future/past.
 
 For a list of all timezones see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
 
