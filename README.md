@@ -53,12 +53,11 @@ The `CACHE_ROOT` should either be on a separate partition, or ideally on separat
 > **Note:** this setting defaults to `./lancache`. Unless your cache storage lives here, you probably want to change this value.
 
 ## `CACHE_DISK_SIZE`
-This setting will constrain the upper limit of space used by cached data. You generally want to leave a small gap (10-20GB at least) between the size listed here and the available storage space used for the cached data, just in case.
-
+This setting will constrain the upper limit of space used by cached data.
 The cache server will automatically delete cached data when the total stored amount approaches this limit, in a least-recently-used fashion (oldest data, least accessed deleted first).
 
 > **Note:** that this must be given in either:
-> - gigabytes, with `g` suffix (e.g. the default value, `1000g`)
+> - gigabytes, with `g` suffix (e.g. the default value, `2000g`)
 > - terabytes, with `t` suffix (e.g. `4t`)
 
 ## `MIN_FREE_DISK`
