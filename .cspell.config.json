@@ -1,0 +1,19 @@
+// cSpell Settings
+{
+    "version": "0.2",
+    "language": "en-GB",
+
+    "dictionaries": [
+        // Makes cSpell only use the British spelling of words
+        "!en_US"
+    ],
+    // List of words to be always considered correct
+    "words": [
+    ],
+    // List of words to be always considered incorrect
+    // This is useful for offensive words and common spelling errors.
+    // For example "hte" should be "the"
+    "flagWords": [
+        "hte"
+    ]
+}
