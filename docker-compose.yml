@@ -1,4 +1,3 @@
-version: '2'
 x-restart-policy: &restart-policy "no"
 services:
   dns:
