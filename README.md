@@ -56,7 +56,7 @@ The `CACHE_ROOT` should either be on a separate partition, or ideally on separat
 This setting will constrain the upper limit of space used by cached data.
 The cache server will automatically delete cached data when the total stored amount approaches this limit, in a least-recently-used fashion (oldest data, least accessed deleted first).
 
-> **Note:** that this must be given in either:
+> **Note:** that this must be given in gigabytes see [Issue #231](https://github.com/lancachenet/monolithic/issues/213):
 > - gigabytes, with `g` suffix (e.g. the default value, `2000g`)
 > - terabytes, with `t` suffix (e.g. `4t`)
 
