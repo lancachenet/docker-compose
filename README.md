@@ -28,6 +28,10 @@ There are a few ways to make your local network aware of the cache server.
   This allows the `lancache-dns` service to provide clients with the appropriate local IPs for cached services, and all other requests will be passed to `UPSTREAM_DNS`.
 2. Use the configuration generators available from [UKLANs' cache-domains](https://github.com/uklans/cache-domains) project to create configuration data to load into your network's existing DNS infrastructure
 
+## `METRIC_BIND_IP`
+
+This is only used in prometheus version of the docker-compose file. Read more about it in the [metrics section](#metrics).
+
 ## `UPSTREAM_DNS`
 This allows you to choose one or more IP addresses for upstream DNS resolution if a name is not matched by the `lancache-dns` service (e.g. non-cached services, local hostname resolution).
 
@@ -80,6 +84,98 @@ This setting allows you to control the maximum duration cached data will be kept
 This setting allows you to set the timezone that is used by the docker containers. Most notably changing the timestamps of the logs. Useful for debugging without having to think sometimes multiple hours in the future/past.
 
 For a list of all timezones see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+
+# Metrics
+
+A metrics-enabled LanCache docker-compose file is available, which provides Prometheus exporters for metric endpoints in the LanCache stack.
+The exporters allow a Prometheus server to scrape metrics from the LanCache stack and visualize them in Grafana.
+
+The metrics stack is available in the `docker-compose.metrics.yml` file.
+
+In order to use this instead of the regular `docker-compose.yml` file, you need to run the following command:
+
+```bash
+docker-compose -f docker-compose.metrics.yml up -d
+```
+
+*The `-f` specifies the file to use, and the `-d` runs the stack in detached mode.*
+
+**Running this version of the docker-compose file, is an advanced option and requires knowledge of Prometheus and Grafana.**  
+This setup ***does not*** provide a Prometheus and Grafana server, you need to provide these yourself and configure them to scrape the metrics from the LanCache stack.  
+This should ***not*** be seen as a full guide on how to deploy Prometheus and Grafana, but only the needed information to get the metrics from the plan cache stack. A good guide to setting up Prometheus and Grafana in Docker can be found in Docker's [Awesome Compose list](https://github.com/docker/awesome-compose/tree/master/prometheus-grafana).
+
+An example Prometheus scraping configuration is provided in the [additional settings](#additional-settings) section.
+
+The metrics stack provides the following exporters:
+
+- `dns-metrics`: Provides bind (DNS) metrics, available at `http://<METRIC_BIND_IP>:9119`  
+  It utilises the [bind_exporter](https://github.com/prometheus-community/bind_exporter) to provide metrics.
+- `monolithic-metrics`: Provides nginx (monolithic) metrics, available at `http://<METRIC_BIND_IP>:9113`  
+  It utilises the [nginx-prometheus-exporter](https://github.com/nginx/nginx-prometheus-exporter) to provide metrics.
+
+The stack also adds labels to each service, allowing you to utilise services such as [cAdvisor](https://github.com/google/cadvisor) to scrape metrics from the containers, providing CPU, memory, disk and network metrics.  
+
+The following services have been labelled, allowing for easy filtering in cAdvisor:
+
+- `dns`: has the label `lancache.dns`
+- `monolithic`: has the label `lancache.monolithic`
+- `dns-metrics`: has the label `lancache.dns.metrics`
+- `monolithic-metrics`: has the label `lancache.monolithic.metrics`
+
+*Sniproxy does not have a metrics endpoint and is not labelled.*
+
+The following dashboards can be used and give a good overview of the metrics that are retrieved with the use of the exporters described here, including [cAdvisor](https://github.com/google/cadvisor) and [node-exporter](https://github.com/prometheus/node_exporter):
+
+- [Bind exporter dashboard](https://grafana.com/grafana/dashboards/1666-bind-dns/)  
+  Full Bind (DNS) exporter dashboard. Shows most of the metrics that are available from the bind_exporter.
+- [NGINX exporter dashboard](./grafana/nginx-exporter.json)  
+  Custom NGINX exporter dashboard, built on top of the official [NGINX exporter dashboard](https://github.com/nginx/nginx-prometheus-exporter/blob/main/grafana/README.md), with additional data retrieved through [cAdvisor](https://github.com/google/cadvisor). This therefore requires cAdvisor to be scraped by the same Prometheus server, in order to show the additional data.
+- [cAdvisor dashboard](https://grafana.com/grafana/dashboards/14282-cadvisor-exporter/)  
+  Full cAdvisor dashboard, showing CPU, memory, disk and network metrics for all containers on the host.
+- [Node exporter dashboard](https://grafana.com/grafana/dashboards/1860)  
+  Full node exporter dashboard, showing CPU, memory, disk and network metrics for the host.
+
+## Additional settings
+
+### `METRIC_BIND_IP`
+
+This sets the IP address that the metric services will listen to. If your cache host has exactly one IP address (eg. `192.168.0.10`), specify that here. If your cache host has multiple IPs, specify exactly one and use that.  
+This will default to the [`DNS_BIND_IP`](#dns_bind_ip) if not set.
+
+This may be used to segregate the cache and DNS IP endpoints from the metrics endpoints.
+
+For Prometheus to scrape the metrics, you will need to add the following to your prometheus.yml file:
+
+> Please note, that Prometheus is not included in this docker-compose stack.
+
+```yaml
+scrape_configs:
+ - job_name: 'lancache'
+    static_configs:
+ - targets: ['<METRIC_BIND_IP>:<METRIC_PORT>']
+```
+
+- `<METRIC_BIND_IP>` is the IP address you set in the `METRIC_BIND_IP` environment variable
+- `<METRIC_PORT>` is the port of the metric services. Please see below for the ports used by the metric services.
+
+| Service            | Port |
+| ------------------ | ---- |
+| Bind (DNS)         | 9119 |
+| Monolithic (NGINX) | 9113 |
+
+### Prometheus example
+
+The following is a full example of a prometheus.yml file that will scrape the metrics from the LanCache services.
+
+```yaml
+scrape_configs:
+ - job_name: 'lancache-dns'
+    static_configs:
+ - targets: ['192.168.0.10:9119']
+ - job_name: 'lancache-monolithic'
+    static_configs:
+ - targets: ['192.168.0.10:9113']
+```
 
 # More information
 The LanCache docker-stack is generated automatically from the data over at [UKLans](https://github.com/uklans/cache-domains). All services that are listed in the UKLans repository are available and supported inside this docker-compose.

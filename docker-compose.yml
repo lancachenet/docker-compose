@@ -6,7 +6,7 @@ services:
     restart: *restart-policy
     ports:
       - ${DNS_BIND_IP}:53:53/udp
-      - ${DNS_BIND_IP}:53:53/tcp
+      - ${DNS_BIND_IP}:53:53/tcp    
 
 ## HTTPS requests are now handled in monolithic directly
 ## you could choose to return to sniproxy if desired
